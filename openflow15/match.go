@@ -1401,7 +1401,7 @@ func NewIpProtoField(protocol uint8) *MatchField {
 
 // IP_DSCP field
 type IpDscpField struct {
-	dscp uint8
+	Dscp uint8
 }
 
 func (m *IpDscpField) Len() uint16 {
@@ -1409,16 +1409,16 @@ func (m *IpDscpField) Len() uint16 {
 }
 func (m *IpDscpField) MarshalBinary() (data []byte, err error) {
 	data = make([]byte, 1)
-	data[0] = m.dscp
+	data[0] = m.Dscp
 	return
 }
 
 func (m *IpDscpField) UnmarshalBinary(data []byte) error {
-	m.dscp = data[0]
+	m.Dscp = data[0]
 	return nil
 }
 
-// Return a MatchField for ipv4/ipv6 dscp
+// Return a MatchField for ipv4/ipv6 Dscp
 func NewIpDscpField(dscp uint8) *MatchField {
 	f := new(MatchField)
 	f.Class = OXM_CLASS_OPENFLOW_BASIC
@@ -1426,7 +1426,7 @@ func NewIpDscpField(dscp uint8) *MatchField {
 	f.HasMask = false
 
 	ipDscpField := new(IpDscpField)
-	ipDscpField.dscp = dscp
+	ipDscpField.Dscp = dscp
 	f.Value = ipDscpField
 	f.Length = uint8(ipDscpField.Len())
 
