@@ -80,12 +80,11 @@ func NewSetPacketInFormet(format uint32) *VendorHeader {
 }
 
 type ControllerID struct {
-	pad [6]byte
-	ID  uint16
+	ID uint16
 }
 
 func (c *ControllerID) Len() uint16 {
-	return uint16(len(c.pad) + 2)
+	return 8
 }
 
 func (c *ControllerID) MarshalBinary() (data []byte, err error) {
@@ -117,11 +116,10 @@ type TLVTableMap struct {
 	OptType   uint8
 	OptLength uint8
 	Index     uint16
-	pad       [2]byte
 }
 
 func (t *TLVTableMap) Len() uint16 {
-	return uint16(len(t.pad) + 6)
+	return 8
 }
 
 func (t *TLVTableMap) MarshalBinary() (data []byte, err error) {
@@ -154,7 +152,6 @@ func (t *TLVTableMap) UnmarshalBinary(data []byte) error {
 
 type TLVTableMod struct {
 	Command uint16
-	pad     [6]byte
 	TlvMaps []*TLVTableMap
 }
 
@@ -908,7 +905,6 @@ func (p *PacketIn2PropBufferID) UnmarshalBinary(data []byte) error {
 type PacketIn2PropTableID struct {
 	*PropHeader /* Type: NXPINT_TABLE_ID */
 	TableID     uint8
-	pad         [3]uint8
 }
 
 func (p *PacketIn2PropTableID) Len() (n uint16) {

@@ -1222,7 +1222,6 @@ type NXActionLearn struct {
 	FinIdleTimeout uint16
 	FinHardTimeout uint16
 	LearnSpecs     []*NXLearnSpec
-	pad2           []byte
 }
 
 func (a *NXActionLearn) Len() uint16 {
