@@ -1030,7 +1030,6 @@ type RoleRequest struct {
 	common.Header
 	Role         uint32
 	Shortid      uint16
-	pad          uint16
 	GenerationId uint64
 }
 type RoleReply = RoleRequest

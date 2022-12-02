@@ -1218,7 +1218,6 @@ type NXActionLearn struct {
 	Cookie         uint64
 	Flags          uint16
 	TableID        uint8
-	pad            uint8
 	FinIdleTimeout uint16
 	FinHardTimeout uint16
 	LearnSpecs     []*NXLearnSpec
@@ -1251,7 +1250,9 @@ func (a *NXActionLearn) MarshalBinary() (data []byte, err error) {
 	binary.BigEndian.PutUint16(data[n:], a.Flags)
 	n += 2
 	data[n] = a.TableID
-	n += 2
+	n += 1
+	// 1 byte for padding
+	n += 1
 	binary.BigEndian.PutUint16(data[n:], a.FinIdleTimeout)
 	n += 2
 	binary.BigEndian.PutUint16(data[n:], a.FinHardTimeout)
@@ -1363,7 +1364,6 @@ func NewNXActionNote() *NXActionNote {
 type NXActionRegLoad2 struct {
 	*NXActionHeader
 	DstField *MatchField
-	pad      []byte
 }
 
 func NewNXActionRegLoad2(dstField *MatchField) *NXActionRegLoad2 {
@@ -1416,7 +1416,6 @@ type NXActionController struct {
 	MaxLen       uint16
 	ControllerID uint16
 	Reason       uint8
-	pad          uint8
 }
 
 func (a *NXActionController) Len() uint16 {
@@ -1486,7 +1485,6 @@ const (
 type NXActionController2PropMaxLen struct {
 	*PropHeader /* Type: NXAC2PT_MAX_LEN */
 	MaxLen      uint16
-	pad         [2]uint8
 }
 
 func (a *NXActionController2PropMaxLen) Len() uint16 {
@@ -1538,7 +1536,6 @@ func NewMaxLen(maxLen uint16) *NXActionController2PropMaxLen {
 type NXActionController2PropControllerID struct {
 	*PropHeader  /* Type: NXAC2PT_CONTROLLER_ID */
 	ControllerID uint16
-	pad          [2]uint8
 }
 
 func (a *NXActionController2PropControllerID) Len() uint16 {
@@ -1590,7 +1587,6 @@ func NewControllerID(controllerID uint16) *NXActionController2PropControllerID {
 type NXActionController2PropReason struct {
 	*PropHeader /* Type: NXAC2PT_REASON */
 	Reason      uint8
-	pad         [3]uint8
 }
 
 func (a *NXActionController2PropReason) Len() uint16 {
@@ -1642,7 +1638,6 @@ func NewReason(reason uint8) *NXActionController2PropReason {
 type NXActionController2PropUserdata struct {
 	*PropHeader /* Type: NXAC2PT_USERDATA */
 	Userdata    []byte
-	pad         []uint8
 }
 
 func (a *NXActionController2PropUserdata) Len() uint16 {
@@ -1694,7 +1689,6 @@ func NewUserdata(userdata []byte) *NXActionController2PropUserdata {
 
 type NXActionController2PropPause struct {
 	*PropHeader /* Type: NXAC2PT_PAUSE */
-	pad         [4]uint8
 }
 
 func (a *NXActionController2PropPause) Len() uint16 {
@@ -1817,7 +1811,6 @@ func DecodeController2Prop(data []byte) (Property, error) {
 // NXActionController2 is NX action to output packet to the Controller set with a specified ID.
 type NXActionController2 struct {
 	*NXActionHeader
-	pad [6]uint8
 
 	props []Property
 }
@@ -1842,6 +1835,7 @@ func (a *NXActionController2) MarshalBinary() (data []byte, err error) {
 	}
 	copy(data[n:], b)
 	n += int(a.NXActionHeader.Len())
+	// 6 bytes for padding
 	n += 6
 
 	for _, prop := range a.props {

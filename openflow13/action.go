@@ -276,7 +276,7 @@ func (a *ActionGroup) UnmarshalBinary(data []byte) error {
 type ActionMplsTtl struct {
 	ActionHeader
 	MplsTtl uint8
-	pad     []byte // 3bytes
+	// 3 bytes for padding
 }
 
 type ActionDecNwTtl struct {
@@ -315,13 +315,12 @@ func (a *ActionDecNwTtl) UnmarshalBinary(data []byte) error {
 type ActionNwTtl struct {
 	ActionHeader
 	NwTtl uint8
-	pad   []byte // 3bytes
+	// 3 bytes for padding
 }
 
 type ActionPush struct {
 	ActionHeader
 	EtherType uint16
-	pad       []byte // 2bytes
 }
 
 func NewActionPushVlan(etherType uint16) *ActionPush {
@@ -362,7 +361,6 @@ func (a *ActionPush) UnmarshalBinary(data []byte) error {
 
 type ActionPopVlan struct {
 	ActionHeader
-	pad []byte // 4bytes
 }
 
 func NewActionPopVlan() *ActionPopVlan {
@@ -395,7 +393,6 @@ func (a *ActionPopVlan) UnmarshalBinary(data []byte) error {
 type ActionPopMpls struct {
 	ActionHeader
 	EtherType uint16
-	pad       []byte // 2bytes
 }
 
 func NewActionPopMpls(etherType uint16) *ActionPopMpls {

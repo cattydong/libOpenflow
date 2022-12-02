@@ -289,7 +289,6 @@ const (
 type ContinuationPropBridge struct {
 	*PropHeader /* Type: NXCPT_BRIDGE */
 	Bridge      [4]uint32
-	pad         [4]uint8
 }
 
 func (p *ContinuationPropBridge) Len() (n uint16) {
@@ -338,7 +337,6 @@ func (p *ContinuationPropBridge) UnmarshalBinary(data []byte) error {
 type ContinuationPropStack struct {
 	*PropHeader /* Type: NXCPT_STACK */
 	Stack       []uint8
-	pad         []uint8
 }
 
 func (p *ContinuationPropStack) Len() (n uint16) {
@@ -427,7 +425,6 @@ func (p *ContinuationPropMirrors) UnmarshalBinary(data []byte) error {
 
 type ContinuationPropConntracked struct {
 	*PropHeader /* Type: NXCPT_CONNTRACKED */
-	pad         [4]uint8
 }
 
 func (p *ContinuationPropConntracked) Len() (n uint16) {
@@ -466,7 +463,6 @@ func (p *ContinuationPropConntracked) UnmarshalBinary(data []byte) error {
 type ContinuationPropTableID struct {
 	*PropHeader /* Type: NXCPT_TABLE_ID */
 	TableID     uint8
-	pad         [3]uint8
 }
 
 func (p *ContinuationPropTableID) Len() (n uint16) {
@@ -508,7 +504,6 @@ func (p *ContinuationPropTableID) UnmarshalBinary(data []byte) error {
 
 type ContinuationPropCookie struct {
 	*PropHeader /* Type: NXCPT_COOKIE */
-	pad         [4]uint8
 	Cookie      uint64
 }
 
@@ -551,7 +546,6 @@ func (p *ContinuationPropCookie) UnmarshalBinary(data []byte) error {
 
 type ContinuationPropActions struct {
 	*PropHeader /* Type: NXCPT_ACTIONS */
-	pad         [4]uint8
 	Actions     []Action
 }
 
@@ -614,7 +608,6 @@ func (p *ContinuationPropActions) UnmarshalBinary(data []byte) error {
 
 type ContinuationPropActionSet struct {
 	*PropHeader /* Type: NXCPT_ACTION_SET */
-	pad         [4]uint8
 	ActionSet   []Action
 }
 
@@ -769,7 +762,6 @@ const (
 type PacketIn2PropPacket struct {
 	*PropHeader
 	Packet protocol.Ethernet
-	pad    []uint8
 }
 
 func (p *PacketIn2PropPacket) Len() (n uint16) {
@@ -946,7 +938,6 @@ func (p *PacketIn2PropTableID) UnmarshalBinary(data []byte) error {
 
 type PacketIn2PropCookie struct {
 	*PropHeader /* Type: NXPINT_COOKIE */
-	pad         [4]uint8
 	Cookie      uint64
 }
 
@@ -992,7 +983,6 @@ func (p *PacketIn2PropCookie) UnmarshalBinary(data []byte) error {
 type PacketIn2PropReason struct {
 	*PropHeader /* Type: NXPINT_COOKIE */
 	Reason      uint8
-	pad         [3]uint8
 }
 
 func (p *PacketIn2PropReason) Len() (n uint16) {
@@ -1035,7 +1025,6 @@ func (p *PacketIn2PropReason) UnmarshalBinary(data []byte) error {
 type PacketIn2PropMetadata struct {
 	*PropHeader /* Type: NXPINT_METADATA */
 	Fields      []MatchField
-	pad         []uint8
 }
 
 func (p *PacketIn2PropMetadata) Len() (n uint16) {
@@ -1100,7 +1089,6 @@ func (p *PacketIn2PropMetadata) UnmarshalBinary(data []byte) error {
 type PacketIn2PropUserdata struct {
 	*PropHeader /* Type: NXPINT_USERDATA */
 	Userdata    []uint8
-	pad         []uint8
 }
 
 func (p *PacketIn2PropUserdata) Len() (n uint16) {
@@ -1145,7 +1133,6 @@ func (p *PacketIn2PropUserdata) UnmarshalBinary(data []byte) error {
 type PacketIn2PropContinuation struct {
 	*PropHeader  /* Type: NXPINT_CONTINUATION */
 	Continuation []byte
-	pad          []uint8
 }
 
 func (p *PacketIn2PropContinuation) Len() (n uint16) {
