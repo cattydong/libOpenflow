@@ -11,6 +11,7 @@ package openflow15
 import (
 	"encoding/binary"
 	"errors"
+	log "github.com/sirupsen/logrus"
 	"net"
 
 	"k8s.io/klog/v2"
@@ -112,6 +113,7 @@ const (
 )
 
 func Parse(b []byte) (message util.Message, err error) {
+	log.Infof("libOpenflow parse OpenFlow15 message, type=%d", b[1])
 	klog.V(4).InfoS("Openflow15 parse", "bytes", b)
 	switch b[1] {
 	case Type_Error:
@@ -199,6 +201,7 @@ func Parse(b []byte) (message util.Message, err error) {
 		err = message.UnmarshalBinary(b)
 	}
 	klog.V(4).InfoS("Parsing result", "error", err, "message", message)
+	log.Infof("Parsing result: error=%v, message=%v", err, message)
 	return
 }
 
@@ -1015,6 +1018,7 @@ func (v *VendorHeader) UnmarshalBinary(data []byte) error {
 	n += 4
 	v.ExperimenterType = binary.BigEndian.Uint32(data[n:])
 	n += 4
+	log.Infof("libOpenflow received VendorHeader message, type=%d", v.ExperimenterType)
 	if n < int(v.Header.Length) {
 		var err error
 		v.VendorData, err = decodeVendorData(v.ExperimenterType, data[n:v.Header.Length])
