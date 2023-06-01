@@ -1140,7 +1140,8 @@ func (p *PacketIn2PropUserdata) UnmarshalBinary(data []byte) error {
 	}
 	n += int(p.PropHeader.Len())
 
-	p.Userdata = data[n:p.Length]
+	p.Userdata = make([]byte, int(p.Length)-n)
+	copy(p.Userdata[0:], data[n:p.Length])
 	return nil
 }
 
@@ -1183,7 +1184,8 @@ func (p *PacketIn2PropContinuation) UnmarshalBinary(data []byte) error {
 	}
 	n += int(p.PropHeader.Len())
 
-	p.Continuation = data[n:p.Length]
+	p.Continuation = make([]byte, int(p.Length)-n)
+	copy(p.Continuation[0:], data[n:p.Length])
 	return nil
 }
 
@@ -1335,6 +1337,7 @@ func decodeVendorData(experimenterType uint32, data []byte) (msg util.Message, e
 	case Type_BundleAdd:
 		msg = new(BundleAdd)
 	case Type_PacketIn2:
+		klog.Infof("Parsing Openflow15 PacketIn2 message, dataLength %d, data: %+v", len(data), data)
 		msg = new(PacketIn2)
 	}
 	err = msg.UnmarshalBinary(data)

@@ -135,6 +135,7 @@ func Parse(b []byte) (message util.Message, err error) {
 	case Type_EchoReply:
 		message = new(common.Header)
 	case Type_Experimenter:
+		klog.Infof("Parsing Openflow15 VendorHeader message, dataLength %d, data: %+v", len(b), b)
 		message = new(VendorHeader)
 	case Type_FeaturesRequest:
 		message = NewFeaturesRequest()
