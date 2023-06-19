@@ -1141,7 +1141,7 @@ func (p *PacketIn2PropUserdata) UnmarshalBinary(data []byte) error {
 	n += int(p.PropHeader.Len())
 
 	p.Userdata = make([]byte, int(p.Length)-n)
-	copy(p.Userdata[0:], data[n:p.Length])
+	copy(p.Userdata, data[n:p.Length])
 	return nil
 }
 
@@ -1185,7 +1185,7 @@ func (p *PacketIn2PropContinuation) UnmarshalBinary(data []byte) error {
 	n += int(p.PropHeader.Len())
 
 	p.Continuation = make([]byte, int(p.Length)-n)
-	copy(p.Continuation[0:], data[n:p.Length])
+	copy(p.Continuation, data[n:p.Length])
 	return nil
 }
 
